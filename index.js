@@ -189,12 +189,18 @@ function sortDesc() {
 
 app.get("/cidade/index", (_, res) => {
   //ex: localhost:3456/create -> retorna os todos as cidades do arquivo
-  res.send(getCidades());
+  res.json({
+    status: true,
+    result: getCidades(),
+  });
 });
 
 app.get("/estado/index", (_, res) => {
   //ex: localhost:3456/create -> retorna os todos estados do arquivo
-  res.send(getEstados());
+  res.json({
+    status: true,
+    result: getEstados(),
+  });
 });
 
 app.get("/create", (_, res) => {
@@ -217,12 +223,18 @@ app.get("/estado/:uf", (req, res) => {
 
 app.get("/estado/index/order-crescente", (_, res) => {
   //ex: localhost:3456//estado/index/order-crescente ->
-  res.send(sortDesc());
+  res.json({
+    message: "As 5 cidades que  possui mais cidades  em ordem descrescente",
+    result: sortDesc(),
+  });
 });
 
 app.get("/estado/index/order-descrescente", (_, res) => {
   //ex: localhost:3456//estado/index/order-descrescente ->
-  res.send(sortAsc());
+  res.json({
+    message: "As 5 cidades que  possui menos cidades  em ordem descrescente",
+    result: sortAsc(),
+  });
 });
 
 app.get("/biglengthName", (_, res) => {
@@ -240,7 +252,10 @@ app.get("/smalllengthName", (_, res) => {
   smallLegthNameCityUF().filter((item) => {
     result.push(`${item.nome} - ${item.uf} - ${item.length}`);
   });
-  res.send(result);
+  res.json({
+    message: "Cidades de menor  nome de cada estados",
+    result: result,
+  });
 });
 
 app.get("/biglengthName/name", (_, res) => {
@@ -256,7 +271,10 @@ app.get("/biglengthName/name", (_, res) => {
     }
   });
 
-  res.json({ result });
+  res.json({
+    message: "Cidade de maior  nome entre todos os  estados",
+    result: result,
+  });
 });
 
 app.get("/smalllengthName/name", (_, res) => {
@@ -272,13 +290,17 @@ app.get("/smalllengthName/name", (_, res) => {
     }
   });
 
-  res.json({ result });
+  res.json({
+    message: "Cidade de menor  nome entre todos os  estados",
+    result: result,
+  });
 });
 
 app.get("/index", (_, res) => {
   //ex: localhost:3456/index -> retorna , total de estados, o 5 estados de maior quantidad e
   // createFileUF();
   res.json({
+    message: "Agrupamento das Funções",
     totalCidade: getCidades(), //total de cidads
     totalEstados: getEstados(), //total de estados
     sortDesc: sortDesc(), // Retorna o 5 estado que mais possui cidades, em ordem descrescente da quantidade de cidade
