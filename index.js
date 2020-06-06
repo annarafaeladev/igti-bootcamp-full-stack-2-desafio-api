@@ -224,7 +224,7 @@ app.get("/estado/:uf", (req, res) => {
 app.get("/estado/index/order-crescente", (_, res) => {
   //ex: localhost:3456//estado/index/order-crescente ->
   res.json({
-    message: "As 5 cidades que  possui mais cidades  em ordem descrescente",
+    message: "Os 5 estados que  possui mais cidades  em ordem descrescente",
     result: sortDesc(),
   });
 });
@@ -282,12 +282,24 @@ app.get("/smalllengthName/name", (_, res) => {
   // array de cidades de menor nome de cada estado
   let result;
   let name = 15;
-
+  let oldName = null;
+  let uf = null;
   smallLegthNameCityUF().find((item) => {
     if (item.nome.length < name) {
       name = item.nome.length;
-      result = `${item.nome} - ${item.uf}`;
+      oldName = item.nome;
+      uf = item.uf;
+    } else {
+      if (item.nome.length === name) {
+        let arrayName = [];
+        arrayName = [item.nome, oldName];
+        arrayName = arrayName.sort((a, b) => a.localeCompare(b));
+        name = arrayName[0].length;
+        oldName = item.nome;
+        uf = item.uf;
+      }
     }
+    result = `${oldName} - ${uf}`;
   });
 
   res.json({
